@@ -42,7 +42,7 @@ func (ac AuthController) Login(ctx *gin.Context) {
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
 	}
 
-	token, err := ac.AuthUsecase.Login(login)
+	token, err := ac.AuthUsecase.Login(login.Username, login.Password)
 
 	if err != nil {
 		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
