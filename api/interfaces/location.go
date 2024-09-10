@@ -5,6 +5,6 @@ import "github.com/Efamamo/IdentiFi/domain"
 type ILocation interface {
 	GetLocations() (*[]domain.Location, error)
 	AddLocation(domain.Location) (*domain.Location, error)
-	UpdateLocation(string, domain.Location) (*domain.Location, error)
+	UpdateLocation(string, domain.LocationUpdate) (*domain.Location, error)
 	DeleteLocation(string) error
 }

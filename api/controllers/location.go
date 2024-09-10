@@ -34,7 +34,7 @@ func (lc LocationController) AddLocation(ctx *gin.Context) {
 
 func (lc LocationController) UpdateLocation(ctx *gin.Context) {
 	id := ctx.Param("id")
-	location := domain.Location{}
+	location := domain.LocationUpdate{}
 
 	err := ctx.BindJSON(&location)
 

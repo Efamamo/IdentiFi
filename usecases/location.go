@@ -29,7 +29,7 @@ func (lu LocationUsecase) AddLocation(l domain.Location) (*domain.Location, erro
 	return location, nil
 }
 
-func (lu LocationUsecase) UpdateLocation(id string, l domain.Location) (*domain.Location, error) {
+func (lu LocationUsecase) UpdateLocation(id string, l domain.LocationUpdate) (*domain.Location, error) {
 	updatedLocation, err := lu.LocationRepo.Update(id, l)
 
 	if err != nil {

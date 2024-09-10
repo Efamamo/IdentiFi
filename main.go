@@ -8,9 +8,12 @@ import (
 )
 
 func main() {
-	var locationUsecase usecase_interfaces.ILocation = usecases.LocationUsecase{}
-	locationController := controllers.LocationController{LocationUseCase: locationUsecase}
 	var authUsecase usecase_interfaces.IAuthUsecase = usecases.AuthUsecase{}
 	authController := controllers.AuthController{AuthUsecase: authUsecase}
-	api.StartServer(locationController, authController)
+	var locationUsecase usecase_interfaces.ILocation = usecases.LocationUsecase{}
+	locationController := controllers.LocationController{LocationUseCase: locationUsecase}
+	var lodgingUsecase usecase_interfaces.ILodging = usecases.LodgingUsecase{}
+	lodgingController := controllers.LodgingController{LodgingUsecase: lodgingUsecase}
+
+	api.StartServer(locationController, authController, lodgingController)
 }

@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func StartServer(locationController controllers.LocationController, authController controllers.AuthController) {
+func StartServer(locationController controllers.LocationController, authController controllers.AuthController, lodgingController controllers.LodgingController) {
 	r := gin.Default()
 
 	r.POST("/auth/signup", authController.Signup)
@@ -16,5 +16,11 @@ func StartServer(locationController controllers.LocationController, authControll
 	r.PATCH("/locations/:id", locationController.UpdateLocation)
 	r.DELETE("/locations/:id", locationController.DeleteLocation)
 
-	r.Run("localhost:5050")
+	r.GET("/lodgings", lodgingController.GetLodgings)
+	r.GET("/lodgings/:id", lodgingController.GetLodgingById)
+	r.POST("/lodgings", lodgingController.AddLodging)
+	r.PATCH("/lodgings/:id", lodgingController.UpdateLodging)
+	r.DELETE("/lodgings/:id", lodgingController.DeleteLodging)
+
+	r.Run("localhost:5060")
 }
