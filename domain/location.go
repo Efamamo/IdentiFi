@@ -1,7 +1,8 @@
 package domain
 
 type Location struct {
-	Name     string
-	Link     string
-	ImageURL string
+	Id         string `json:"id"`
+	Name       string `binding:"required" json:"name"`
+	GoogleLink string `binding:"required" json:"google_link"`
+	ImageURL   string `binding:"required" json:"image_url"`
 }

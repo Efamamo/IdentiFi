@@ -8,10 +8,10 @@ import (
 func StartServer(locationController controllers.LocationController) {
 	r := gin.Default()
 
-	r.GET("/location", locationController.GetLocations)
-	r.POST("/location", locationController.AddLocation)
-	r.PATCH("/location/:id", locationController.UpdateLocation)
-	r.DELETE("/location/:id", locationController.DeleteLocation)
+	r.GET("/locations", locationController.GetLocations)
+	r.POST("/locations", locationController.AddLocation)
+	r.PATCH("/locations/:id", locationController.UpdateLocation)
+	r.DELETE("/locations/:id", locationController.DeleteLocation)
 
-	r.Run()
+	r.Run("localhost:5050")
 }

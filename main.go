@@ -3,9 +3,12 @@ package main
 import (
 	"github.com/Efamamo/IdentiFi/api"
 	"github.com/Efamamo/IdentiFi/api/controllers"
+	usecase_interfaces "github.com/Efamamo/IdentiFi/api/interfaces"
+	"github.com/Efamamo/IdentiFi/usecases"
 )
 
 func main() {
-	locationController := controllers.LocationController{}
+	var locationUsecase usecase_interfaces.ILocation = usecases.LocationUsecase{}
+	locationController := controllers.LocationController{LocationUseCase: locationUsecase}
 	api.StartServer(locationController)
 }
