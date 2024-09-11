@@ -20,14 +20,14 @@ func (ac AuthController) Signup(ctx *gin.Context) {
 	err := ctx.BindJSON(&user)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	err = ac.AuthUsecase.Signup(user)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusInternalServerError, err)
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -40,13 +40,15 @@ func (ac AuthController) Login(ctx *gin.Context) {
 	err := ctx.BindJSON(&login)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	token, err := ac.AuthUsecase.Login(login.Username, login.Password)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 
 	}
 

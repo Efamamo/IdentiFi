@@ -1,6 +1,8 @@
 package usecases
 
 import (
+	"errors"
+
 	"github.com/Efamamo/WonderBeam/domain"
 	repo_interfaces "github.com/Efamamo/WonderBeam/usecases/interfaces"
 )
@@ -33,10 +35,13 @@ func (au AuthUsecase) Login(username string, password string) (*domain.Token, er
 	if err != nil {
 		return nil, err
 	}
+	if user == nil {
+		return nil, errors.New("invalid credentials")
+	}
 
-	err = au.PasswordServices.MatchPassword(password, user.Password)
+	err = au.PasswordServices.MatchPassword(user.Password, password)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("invalid credentials")
 	}
 
 	accessToken, err := au.JwtServices.GenerateAccessToken(*user)

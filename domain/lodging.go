@@ -1,6 +1,10 @@
 package domain
 
+import "gorm.io/gorm"
+
 type Lodging struct {
+	gorm.Model
+	Id             string   `json:"id" gorm:"primaryKey"`
 	Name           string   `binding:"required" json:"name"`
 	GoogleLink     string   `binding:"required" json:"google_link"`
 	Description    string   `binding:"required" json:"description"`
