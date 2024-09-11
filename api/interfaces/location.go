@@ -1,6 +1,6 @@
 package usecase_interfaces
 
-import "github.com/Efamamo/IdentiFi/domain"
+import "github.com/Efamamo/WonderBeam/domain"
 
 type ILocation interface {
 	GetLocations() (*[]domain.Location, error)

@@ -3,9 +3,10 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/Efamamo/IdentiFi/api/controllers/dtos"
-	usecase_interfaces "github.com/Efamamo/IdentiFi/api/interfaces"
-	"github.com/Efamamo/IdentiFi/domain"
+	"github.com/Efamamo/WonderBeam/api/controllers/dtos"
+	usecase_interfaces "github.com/Efamamo/WonderBeam/api/interfaces"
+	"github.com/Efamamo/WonderBeam/domain"
+
 	"github.com/gin-gonic/gin"
 )
 

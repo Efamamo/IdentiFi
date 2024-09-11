@@ -1,8 +1,8 @@
 package repo_interfaces
 
 import (
-	"github.com/Efamamo/IdentiFi/api/controllers/dtos"
-	"github.com/Efamamo/IdentiFi/domain"
+	"github.com/Efamamo/WonderBeam/api/controllers/dtos"
+	"github.com/Efamamo/WonderBeam/domain"
 )
 
 type IAuthRepo interface {

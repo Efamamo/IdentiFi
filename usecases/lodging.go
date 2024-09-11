@@ -1,8 +1,8 @@
 package usecases
 
 import (
-	"github.com/Efamamo/IdentiFi/domain"
-	repo_interfaces "github.com/Efamamo/IdentiFi/usecases/interfaces"
+	"github.com/Efamamo/WonderBeam/domain"
+	repo_interfaces "github.com/Efamamo/WonderBeam/usecases/interfaces"
 )
 
 type LodgingUsecase struct {

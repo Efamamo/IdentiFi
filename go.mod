@@ -1,4 +1,4 @@
-module github.com/Efamamo/IdentiFi
+module github.com/Efamamo/WonderBeam
 
 go 1.22.5
 

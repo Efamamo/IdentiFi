@@ -1,6 +1,6 @@
 package repo_interfaces
 
-import "github.com/Efamamo/IdentiFi/domain"
+import "github.com/Efamamo/WonderBeam/domain"
 
 type ILocationRepo interface {
 	Save(domain.Location) (*domain.Location, error)

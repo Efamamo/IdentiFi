@@ -3,8 +3,8 @@ package controllers
 import (
 	"net/http"
 
-	usecase_interfaces "github.com/Efamamo/IdentiFi/api/interfaces"
-	"github.com/Efamamo/IdentiFi/domain"
+	usecase_interfaces "github.com/Efamamo/WonderBeam/api/interfaces"
+	"github.com/Efamamo/WonderBeam/domain"
 	"github.com/gin-gonic/gin"
 )
 
