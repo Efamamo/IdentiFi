@@ -3,12 +3,13 @@ package domain
 import (
 	"time"
 
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
 type User struct {
 	gorm.Model
-	Id                string    `json:"id" gorm:"primaryKey"`
+	Id                uuid.UUID `json:"id" gorm:"primaryKey"`
 	Username          string    `json:"username" binding:"required"`
 	Email             string    `json:"email" binding:"required" gorm:"unique"`
 	Password          string    `json:"password" binding:"required"`

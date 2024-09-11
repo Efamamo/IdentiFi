@@ -1,13 +1,16 @@
 package domain
 
-import "gorm.io/gorm"
+import (
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+)
 
 type Location struct {
 	gorm.Model
-	Id         string `json:"id" gorm:"primaryKey"`
-	Name       string `binding:"required" json:"name"`
-	GoogleLink string `binding:"required" json:"google_link"`
-	ImageURL   string `binding:"required" json:"image_url"`
+	Id         uuid.UUID `json:"id" gorm:"primaryKey"`
+	Name       string    `binding:"required" json:"name"`
+	GoogleLink string    `binding:"required" json:"google_link"`
+	ImageURL   string    `binding:"required" json:"image_url"`
 }
 
 type LocationUpdate struct {

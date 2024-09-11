@@ -18,14 +18,14 @@ func (lc LocationController) AddLocation(ctx *gin.Context) {
 	err := ctx.BindJSON(&location)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	loc, err := lc.LocationUseCase.AddLocation(location)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -39,14 +39,14 @@ func (lc LocationController) UpdateLocation(ctx *gin.Context) {
 	err := ctx.BindJSON(&location)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	loc, err := lc.LocationUseCase.UpdateLocation(id, location)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -58,7 +58,8 @@ func (lc LocationController) GetLocations(ctx *gin.Context) {
 	locations, err := lc.LocationUseCase.GetLocations()
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 
 	ctx.IndentedJSON(http.StatusAccepted, locations)
@@ -69,7 +70,7 @@ func (lc LocationController) DeleteLocation(ctx *gin.Context) {
 	err := lc.LocationUseCase.DeleteLocation(id)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusNotFound, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{"error": err.Error()})
 	}
 
 	ctx.Status(http.StatusNoContent)

@@ -16,14 +16,13 @@ func main() {
 
 	infrastructure.ConnectToDB()
 	infrastructure.DB.AutoMigrate(&domain.User{})
-	infrastructure.DB.AutoMigrate(&domain.Location{})
-	infrastructure.DB.AutoMigrate(&domain.Lodging{})
+	infrastructure.DB.AutoMigrate(&domain.Location{}, &domain.Lodging{})
 	infrastructure.DB.AutoMigrate(&domain.Activity{})
 
 	var authUsecase usecase_interfaces.IAuthUsecase = usecases.AuthUsecase{AuthRepo: repositories.AuthRepo{DB: infrastructure.DB}, JwtServices: infrastructure.Token{}, PasswordServices: infrastructure.Pass{}}
 	authController := controllers.AuthController{AuthUsecase: authUsecase}
 
-	var locationUsecase usecase_interfaces.ILocation = usecases.LocationUsecase{}
+	var locationUsecase usecase_interfaces.ILocation = usecases.LocationUsecase{LocationRepo: repositories.LocationRepo{DB: infrastructure.DB}}
 	locationController := controllers.LocationController{LocationUseCase: locationUsecase}
 
 	var lodgingUsecase usecase_interfaces.ILodging = usecases.LodgingUsecase{}

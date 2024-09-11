@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/Efamamo/WonderBeam/domain"
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -28,7 +29,9 @@ func (ar AuthRepo) SignUp(user domain.User) error {
 		return errors.New("username taken")
 	}
 
-	result := ar.DB.Create(&user) // pass pointer of data to Create
+	user.Id = uuid.New()
+
+	result := ar.DB.Create(&user)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -46,7 +49,6 @@ func (ar AuthRepo) FindUserByUsername(username string) (*domain.User, error) {
 		}
 	}
 
-	// Return the user and no error
 	return &user, nil
 }
 func (ar AuthRepo) FindUserByEmail(email string) (*domain.User, error) {
@@ -60,6 +62,5 @@ func (ar AuthRepo) FindUserByEmail(email string) (*domain.User, error) {
 		}
 	}
 
-	// Return the user and no error
 	return &user, nil
 }
