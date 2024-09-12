@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/Efamamo/WonderBeam/domain"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm/logger"
 
@@ -34,4 +35,11 @@ func ConnectToDB() {
 	fmt.Println("Successfully connected to the database!")
 
 	// Your database logic here
+}
+
+func Migrate() {
+	DB.AutoMigrate(&domain.User{})
+	DB.AutoMigrate(&domain.Location{})
+	DB.AutoMigrate(&domain.Lodging{})
+	DB.AutoMigrate(&domain.Activity{})
 }

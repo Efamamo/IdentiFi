@@ -16,16 +16,16 @@ func StartServer(locationController controllers.LocationController, authControll
 	r.PATCH("/locations/:id", locationController.UpdateLocation)
 	r.DELETE("/locations/:id", locationController.DeleteLocation)
 
-	r.GET("/:location_id/lodgings", lodgingController.GetLodgings)
-	r.GET("/:location_id/lodgings/:id", lodgingController.GetLodgingById)
-	r.POST("/:location_id/lodgings", lodgingController.AddLodging)
-	r.PATCH("/:location_id/lodgings/:id", lodgingController.UpdateLodging)
-	r.DELETE("/:location_id/lodgings/:id", lodgingController.DeleteLodging)
+	r.GET("/locations/:id/lodgings", lodgingController.GetLodgings)
+	r.GET("/locations/:id/lodgings/:lid", lodgingController.GetLodgingById)
+	r.POST("/locations/:id/lodgings", lodgingController.AddLodging)
+	r.PATCH("/locations/:id/lodgings/:lid", lodgingController.UpdateLodging)
+	r.DELETE("/locations/:id/lodgings/:lid", lodgingController.DeleteLodging)
 
-	r.GET("/activities", activityController.GetActivities)
-	r.POST("/activities", activityController.AddActivity)
-	r.PATCH("/activities/:id", activityController.UpdateActivity)
-	r.DELETE("/activities/:id", activityController.DeleteActivity)
+	r.GET("/locations/:id/lodgings/:lid/activities", activityController.GetActivities)
+	r.POST("/locations/:id/lodgings/:lid/activities", activityController.AddActivity)
+	r.PATCH("/locations/:id/lodgings/:lid/activities/:aid", activityController.UpdateActivity)
+	r.DELETE("/locations/:id/lodgings/:lid/activities/:aid", activityController.DeleteActivity)
 
 	r.Run("localhost:5060")
 }

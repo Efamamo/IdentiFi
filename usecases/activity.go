@@ -10,7 +10,7 @@ type ActivityUsecase struct {
 }
 
 func (au ActivityUsecase) GetActivities(lodgingId string) (*[]domain.Activity, error) {
-	activities, err := au.ActivityRepo.Get(lodgingId)
+	activities, err := au.ActivityRepo.GetActivities(lodgingId)
 
 	if err != nil {
 		return nil, err
@@ -20,7 +20,8 @@ func (au ActivityUsecase) GetActivities(lodgingId string) (*[]domain.Activity, e
 }
 
 func (au ActivityUsecase) AddActivity(a domain.Activity) (*domain.Activity, error) {
-	activity, err := au.ActivityRepo.Save(a)
+
+	activity, err := au.ActivityRepo.SaveActivity(a)
 
 	if err != nil {
 		return nil, err
@@ -30,7 +31,7 @@ func (au ActivityUsecase) AddActivity(a domain.Activity) (*domain.Activity, erro
 }
 
 func (au ActivityUsecase) UpdateActivity(id string, a domain.ActivityUpdate) (*domain.Activity, error) {
-	updatedActivity, err := au.ActivityRepo.Update(id, a)
+	updatedActivity, err := au.ActivityRepo.UpdateActivity(id, a)
 
 	if err != nil {
 		return nil, err
@@ -40,7 +41,7 @@ func (au ActivityUsecase) UpdateActivity(id string, a domain.ActivityUpdate) (*d
 }
 
 func (au ActivityUsecase) DeleteActivity(id string) error {
-	err := au.ActivityRepo.Delete(id)
+	err := au.ActivityRepo.DeleteActivity(id)
 
 	if err != nil {
 		return err

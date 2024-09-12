@@ -29,7 +29,7 @@ func (ar AuthRepo) SignUp(user domain.User) error {
 		return errors.New("username taken")
 	}
 
-	user.Id = uuid.New()
+	user.ID = uuid.New()
 
 	result := ar.DB.Create(&user)
 	if result.Error != nil {

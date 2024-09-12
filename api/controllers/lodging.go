@@ -14,7 +14,7 @@ type LodgingController struct {
 }
 
 func (ldc LodgingController) GetLodgings(ctx *gin.Context) {
-	location := ctx.Param("location_id")
+	location := ctx.Param("id")
 
 	lodgings, err := ldc.LodgingUsecase.GetLodgings(location)
 
@@ -27,7 +27,7 @@ func (ldc LodgingController) GetLodgings(ctx *gin.Context) {
 }
 
 func (ldc LodgingController) GetLodgingById(ctx *gin.Context) {
-	id := ctx.Param("id")
+	id := ctx.Param("lid")
 
 	lodging, err := ldc.LodgingUsecase.GetLodgingById(id)
 
@@ -40,7 +40,7 @@ func (ldc LodgingController) GetLodgingById(ctx *gin.Context) {
 }
 
 func (ldc LodgingController) AddLodging(ctx *gin.Context) {
-	location := ctx.Param("location_id")
+	location := ctx.Param("id")
 	lodging := domain.Lodging{}
 	locationId, err := uuid.Parse(location)
 
@@ -68,7 +68,7 @@ func (ldc LodgingController) AddLodging(ctx *gin.Context) {
 }
 
 func (ldc LodgingController) UpdateLodging(ctx *gin.Context) {
-	id := ctx.Param("id")
+	id := ctx.Param("lid")
 
 	updateLodging := domain.LodgingUpdate{}
 
@@ -90,7 +90,7 @@ func (ldc LodgingController) UpdateLodging(ctx *gin.Context) {
 }
 
 func (ldc LodgingController) DeleteLodging(ctx *gin.Context) {
-	id := ctx.Param("id")
+	id := ctx.Param("lid")
 
 	err := ldc.LodgingUsecase.DeleteLodging(id)
 

@@ -8,7 +8,7 @@ import (
 
 type Lodging struct {
 	gorm.Model
-	Id             uuid.UUID      `json:"id" gorm:"primaryKey"`
+	ID             uuid.UUID      `gorm:"primaryKey;type:uuid;default:uuid_generate_v4()"` // Use UUID as the primary
 	Name           string         `binding:"required" json:"name"`
 	GoogleLink     string         `binding:"required" json:"google_link"`
 	Description    string         `binding:"required" json:"description"`
@@ -31,9 +31,6 @@ type LodgingUpdate struct {
 	Category       string    `json:"category"`
 	QualityRating  int       `json:"quality_rating"`
 	UserRating     int       `json:"user_rating"`
-	Emails         []string  `json:"emails"`
-	PhoneNumbers   []string  `json:"phone_numbers"`
 	Website        string    `json:"website"`
-	Amenties       []string  `json:"amenties"`
 	LocationID     uuid.UUID `json:"location_id"`
 }

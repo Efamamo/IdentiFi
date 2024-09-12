@@ -13,7 +13,7 @@ type LocationRepo struct {
 }
 
 func (lr LocationRepo) Save(location domain.Location) (*domain.Location, error) {
-	location.Id = uuid.New()
+	location.ID = uuid.New()
 
 	result := lr.DB.Create(&location)
 

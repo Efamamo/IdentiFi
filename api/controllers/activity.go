@@ -1,11 +1,13 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	usecase_interfaces "github.com/Efamamo/WonderBeam/api/interfaces"
 	"github.com/Efamamo/WonderBeam/domain"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 type ActivityController struct {
@@ -14,18 +16,27 @@ type ActivityController struct {
 
 func (ac ActivityController) AddActivity(ctx *gin.Context) {
 	activity := domain.Activity{}
-
-	err := ctx.BindJSON(&activity)
+	lodging := ctx.Param("lid")
+	lodgingId, err := uuid.Parse(lodging)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	activity.LodgingId = lodgingId
+	fmt.Println(activity)
+
+	err = ctx.BindJSON(&activity)
+
+	if err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	loc, err := ac.ActivityUsecase.AddActivity(activity)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -33,20 +44,20 @@ func (ac ActivityController) AddActivity(ctx *gin.Context) {
 }
 
 func (ac ActivityController) UpdateActivity(ctx *gin.Context) {
-	id := ctx.Param("id")
+	id := ctx.Param("aid")
 	act := domain.ActivityUpdate{}
 
 	err := ctx.BindJSON(&act)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	updatedActivity, err := ac.ActivityUsecase.UpdateActivity(id, act)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -55,23 +66,23 @@ func (ac ActivityController) UpdateActivity(ctx *gin.Context) {
 
 func (ac ActivityController) GetActivities(ctx *gin.Context) {
 
-	lodging := ctx.Query("lodging")
+	lodging := ctx.Param("lid")
 
 	activities, err := ac.ActivityUsecase.GetActivities(lodging)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
 	ctx.IndentedJSON(http.StatusAccepted, activities)
 }
 
 func (ac ActivityController) DeleteActivity(ctx *gin.Context) {
-	id := ctx.Param("id")
+	id := ctx.Param("aid")
 	err := ac.ActivityUsecase.DeleteActivity(id)
 
 	if err != nil {
-		ctx.IndentedJSON(http.StatusNotFound, gin.H{"error": err})
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{"error": err.Error()})
 	}
 
 	ctx.Status(http.StatusNoContent)

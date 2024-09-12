@@ -7,8 +7,7 @@ import (
 
 type Location struct {
 	gorm.Model
-	Id         uuid.UUID `json:"id" gorm:"primaryKey"`
-	Name       string    `binding:"required" json:"name"`
+	ID         uuid.UUID `gorm:"primaryKey;type:uuid;default:uuid_generate_v4()"` // Use UUID as the primary
 	GoogleLink string    `binding:"required" json:"google_link"`
 	ImageURL   string    `binding:"required" json:"image_url"`
 }
