@@ -7,4 +7,5 @@ type ILocation interface {
 	AddLocation(domain.Location) (*domain.Location, error)
 	UpdateLocation(string, domain.LocationUpdate) (*domain.Location, error)
 	DeleteLocation(string) error
+	GetLocationById(string) (*domain.Location, error)
 }

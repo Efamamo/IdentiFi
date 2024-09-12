@@ -7,4 +7,5 @@ type ILocationRepo interface {
 	Delete(string) error
 	Update(string, domain.LocationUpdate) (*domain.Location, error)
 	Get() (*[]domain.Location, error)
+	GetLocationById(string) (*domain.Location, error)
 }

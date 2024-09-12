@@ -1,10 +1,10 @@
 package repositories
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/Efamamo/WonderBeam/domain"
-	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -13,16 +13,12 @@ type LodgingRepo struct {
 }
 
 func (lr LodgingRepo) SaveLodging(lodging domain.Lodging) (*domain.Lodging, error) {
-	var location domain.Location
-	result := lr.DB.Where("id = ?", lodging.LocationID).First(&location)
+	if err := lr.DB.First(&domain.Location{}, lodging.LocationID).Error; err != nil {
 
-	if result.Error != nil {
-		return nil, result.Error
+		return nil, errors.New("location not found")
 	}
 
-	lodging.ID = uuid.New()
-
-	result = lr.DB.Create(&lodging)
+	result := lr.DB.Create(&lodging)
 
 	if result.Error != nil {
 		return nil, result.Error
@@ -39,6 +35,18 @@ func (lr LodgingRepo) DeleteLodging(id string) error {
 	if result.RowsAffected == 0 {
 		return fmt.Errorf("no record found with id: %s", id)
 	}
+
+	var activities []domain.Activity
+	lr.DB.Where("lodging_id = ?", id).Delete(&activities)
+
+	return nil
+}
+
+func (lr LodgingRepo) DeleteLocationLodgings(id string) error {
+	lr.DB.Where("location_id = ?", id).Delete(&domain.Lodging{})
+	var activities []domain.Activity
+	lr.DB.Where("location_id = ?", id).Delete(&activities)
+
 	return nil
 }
 func (lr LodgingRepo) UpdateLodging(lid string, updateValues domain.LodgingUpdate) (*domain.Lodging, error) {
@@ -101,9 +109,15 @@ func (lr LodgingRepo) UpdateLodging(lid string, updateValues domain.LodgingUpdat
 	return &lodging, nil
 }
 func (lr LodgingRepo) GetLodgings(locationId string) (*[]domain.Lodging, error) {
+	var location domain.Location
+	result := lr.DB.Where("id = ?", locationId).First(&location)
+
+	if result.Error != nil {
+		return nil, errors.New("location not found")
+	}
 	var lodgings []domain.Lodging
 
-	result := lr.DB.Where("location_id", locationId).Find(&lodgings)
+	result = lr.DB.Where("location_id", locationId).Find(&lodgings)
 
 	if result.Error != nil {
 		return nil, result.Error

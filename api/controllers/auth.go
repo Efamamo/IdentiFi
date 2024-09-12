@@ -24,6 +24,11 @@ func (ac AuthController) Signup(ctx *gin.Context) {
 		return
 	}
 
+	if len(user.Password) < 5 {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": "minimum password length is 5"})
+		return
+	}
+
 	err = ac.AuthUsecase.Signup(user)
 
 	if err != nil {

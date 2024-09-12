@@ -10,7 +10,7 @@ import (
 )
 
 type LodgingController struct {
-	LodgingUsecase usecase_interfaces.ILodging
+	LodgingUsecase  usecase_interfaces.ILodging
 }
 
 func (ldc LodgingController) GetLodgings(ctx *gin.Context) {
@@ -42,6 +42,7 @@ func (ldc LodgingController) GetLodgingById(ctx *gin.Context) {
 func (ldc LodgingController) AddLodging(ctx *gin.Context) {
 	location := ctx.Param("id")
 	lodging := domain.Lodging{}
+
 	locationId, err := uuid.Parse(location)
 
 	if err != nil {

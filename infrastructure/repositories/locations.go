@@ -72,3 +72,14 @@ func (lr LocationRepo) Update(id string, updateData domain.LocationUpdate) (*dom
 
 	return &location, nil
 }
+
+func (lr LocationRepo) GetLocationById(id string) (*domain.Location, error) {
+	var location domain.Location
+
+	result := lr.DB.Where("id = ?", id).First(&location)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &location, nil
+}

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	usecase_interfaces "github.com/Efamamo/WonderBeam/api/interfaces"
@@ -24,7 +23,14 @@ func (ac ActivityController) AddActivity(ctx *gin.Context) {
 		return
 	}
 	activity.LodgingId = lodgingId
-	fmt.Println(activity)
+
+	locationId, err := uuid.Parse(ctx.Param("id"))
+
+	if err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	activity.LocationId = locationId
 
 	err = ctx.BindJSON(&activity)
 

@@ -20,17 +20,17 @@ type Lodging struct {
 	PhoneNumbers   pq.StringArray `binding:"required" json:"phone_numbers" gorm:"type:text[]"` // pq.StringArray
 	Website        string         `binding:"required" json:"website"`
 	Amenities      pq.StringArray `binding:"required" json:"amenities" gorm:"type:text[]"` // pq.StringArray
-	LocationID     uuid.UUID      `json:"location_id"`
+	LocationID     uuid.UUID      `json:"location_id" gorm:"index;constraint:OnDelete:CASCADE;"`
+	Location       *Location      `json:"location"` // Pointer to allow optional
 }
 
 type LodgingUpdate struct {
-	Name           string    `json:"name"`
-	GoogleLink     string    `json:"google_link"`
-	Description    string    `json:"description"`
-	BudgetPerNight float64   `json:"budget_per_night"`
-	Category       string    `json:"category"`
-	QualityRating  int       `json:"quality_rating"`
-	UserRating     int       `json:"user_rating"`
-	Website        string    `json:"website"`
-	LocationID     uuid.UUID `json:"location_id"`
+	Name           string  `json:"name"`
+	GoogleLink     string  `json:"google_link"`
+	Description    string  `json:"description"`
+	BudgetPerNight float64 `json:"budget_per_night"`
+	Category       string  `json:"category"`
+	QualityRating  int     `json:"quality_rating"`
+	UserRating     int     `json:"user_rating"`
+	Website        string  `json:"website"`
 }

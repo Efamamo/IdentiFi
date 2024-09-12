@@ -26,11 +26,11 @@ func main() {
 	var authUsecase usecase_interfaces.IAuthUsecase = usecases.AuthUsecase{AuthRepo: repositories.AuthRepo{DB: infrastructure.DB}, JwtServices: infrastructure.Token{}, PasswordServices: infrastructure.Pass{}}
 	authController := controllers.AuthController{AuthUsecase: authUsecase}
 
-	var locationUsecase usecase_interfaces.ILocation = usecases.LocationUsecase{LocationRepo: repositories.LocationRepo{DB: infrastructure.DB}}
-	locationController := controllers.LocationController{LocationUseCase: locationUsecase}
-
 	var lodgingUsecase usecase_interfaces.ILodging = usecases.LodgingUsecase{LodgingRepo: repositories.LodgingRepo{DB: infrastructure.DB}}
 	lodgingController := controllers.LodgingController{LodgingUsecase: lodgingUsecase}
+
+	var locationUsecase usecase_interfaces.ILocation = usecases.LocationUsecase{LocationRepo: repositories.LocationRepo{DB: infrastructure.DB}, LodgingRepo: repositories.LodgingRepo{DB: infrastructure.DB}}
+	locationController := controllers.LocationController{LocationUseCase: locationUsecase}
 
 	var activityUsecase usecase_interfaces.IActivity = usecases.ActivityUsecase{ActivityRepo: repositories.ActivityRepo{DB: infrastructure.DB}}
 	activityController := controllers.ActivityController{ActivityUsecase: activityUsecase}

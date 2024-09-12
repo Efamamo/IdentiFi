@@ -39,7 +39,6 @@ func ConnectToDB() {
 
 func Migrate() {
 	DB.AutoMigrate(&domain.User{})
-	DB.AutoMigrate(&domain.Location{})
-	DB.AutoMigrate(&domain.Lodging{})
+	DB.AutoMigrate(&domain.Location{}, &domain.Lodging{})
 	DB.AutoMigrate(&domain.Activity{})
 }

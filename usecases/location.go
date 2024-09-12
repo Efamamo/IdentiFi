@@ -7,6 +7,7 @@ import (
 
 type LocationUsecase struct {
 	LocationRepo repo_interfaces.ILocationRepo
+	LodgingRepo  repo_interfaces.ILodgingRepo
 }
 
 func (lu LocationUsecase) GetLocations() (*[]domain.Location, error) {
@@ -45,5 +46,22 @@ func (lu LocationUsecase) DeleteLocation(id string) error {
 	if err != nil {
 		return err
 	}
+
+	err = lu.LodgingRepo.DeleteLocationLodgings(id)
+
+	if err != nil {
+		return err
+	}
+
 	return nil
+}
+
+func (lu LocationUsecase) GetLocationById(id string) (*domain.Location, error) {
+	location, err := lu.LocationRepo.GetLocationById(id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return location, nil
 }

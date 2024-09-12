@@ -20,6 +20,13 @@ func (ar ActivityRepo) SaveActivity(activity domain.Activity) (*domain.Activity,
 	if result.Error != nil {
 		return nil, result.Error
 	}
+	var location domain.Location
+
+	result = ar.DB.Where("id = ?", activity.LocationId).First(&location)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
 
 	activity.ID = uuid.New()
 	result = ar.DB.Create(&activity)
@@ -38,6 +45,7 @@ func (ar ActivityRepo) DeleteActivity(id string) error {
 	if result.RowsAffected == 0 {
 		return fmt.Errorf("no record found with id: %s", id)
 	}
+
 	return nil
 }
 func (ar ActivityRepo) UpdateActivity(aid string, updateValues domain.ActivityUpdate) (*domain.Activity, error) {
