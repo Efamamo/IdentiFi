@@ -2,9 +2,12 @@ package repositories
 
 import (
 	"errors"
+	"fmt"
+	"os"
 
 	"github.com/Efamamo/WonderBeam/domain"
 	"github.com/google/uuid"
+	"gopkg.in/gomail.v2"
 	"gorm.io/gorm"
 )
 
@@ -30,11 +33,14 @@ func (ar AuthRepo) SignUp(user domain.User) error {
 	}
 
 	user.ID = uuid.New()
+	user.VerificationToken = uuid.New().String()
 
 	result := ar.DB.Create(&user)
 	if result.Error != nil {
 		return result.Error
 	}
+	ar.SendVerificationEmail(user)
+
 	return nil
 }
 
@@ -63,4 +69,49 @@ func (ar AuthRepo) FindUserByEmail(email string) (*domain.User, error) {
 	}
 
 	return &user, nil
+}
+
+func (ar AuthRepo) SendVerificationEmail(user domain.User) {
+
+	from := "ephremmamo555@gmail.com"
+	to := user.Email
+	subject := "Verify your email"
+	body := fmt.Sprintf(`
+    <html>
+    <body>
+        <p>Hello %s,</p>
+        <p>Please click the following link to verify your account:</p>
+        <a href="http://localhost:8080/auth/verify?token=%s">Verify Your Account</a>
+    </body>
+    </html>`, user.Username, user.VerificationToken)
+
+	mailer := gomail.NewMessage()
+	mailer.SetHeader("From", from)
+	mailer.SetHeader("To", to)
+	mailer.SetHeader("Subject", subject)
+	mailer.SetBody("text/html", body)
+
+	dialer := gomail.NewDialer("sandbox.smtp.mailtrap.io", 2525, os.Getenv("MAILTRAP_USERNAME"), os.Getenv("MAILTRAP_PASSWORD"))
+
+	err := dialer.DialAndSend(mailer)
+	if err != nil {
+		fmt.Println("Could not send email:", err)
+		return
+	}
+
+	fmt.Println("Verification email sent successfully")
+}
+
+func (ar AuthRepo) VerifyEmail(token string) error {
+
+	var user domain.User
+	if result := ar.DB.Where("verification_token = ?", token).First(&user); result.Error != nil {
+		return result.Error
+	}
+
+	user.IsVerified = true
+	user.VerificationToken = ""
+	ar.DB.Save(&user)
+
+	return nil
 }

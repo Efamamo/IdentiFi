@@ -7,6 +7,7 @@ import (
 type IAuthRepo interface {
 	SignUp(domain.User) error
 	FindUserByUsername(string) (*domain.User, error)
+	VerifyEmail(string) error
 }
 
 type IJwtServices interface {

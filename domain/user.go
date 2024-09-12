@@ -14,5 +14,6 @@ type User struct {
 	Email             string    `json:"email" binding:"required" gorm:"unique"`
 	Password          string    `json:"password" binding:"required"`
 	VerificationToken string    `json:"verification_token"`
-	TimeOut           time.Time `json:"time_out"`
+	IsVerified        bool      `json:"is_verified" gorm:"default:false"`
+	CreatedAt         time.Time
 }

@@ -39,6 +39,10 @@ func (au AuthUsecase) Login(username string, password string) (*domain.Token, er
 		return nil, errors.New("invalid credentials")
 	}
 
+	if !user.IsVerified {
+		return nil, errors.New("email not verified")
+	}
+
 	err = au.PasswordServices.MatchPassword(user.Password, password)
 	if err != nil {
 		return nil, errors.New("invalid credentials")
@@ -61,4 +65,12 @@ func (au AuthUsecase) Login(username string, password string) (*domain.Token, er
 
 	return &token, nil
 
+}
+
+func (au AuthUsecase) Verify(token string) error {
+	err := au.AuthRepo.VerifyEmail(token)
+	if err != nil {
+		return err
+	}
+	return nil
 }

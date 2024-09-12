@@ -10,6 +10,7 @@ func StartServer(locationController controllers.LocationController, authControll
 
 	r.POST("/auth/signup", authController.Signup)
 	r.POST("/auth/login", authController.Login)
+	r.GET("/auth/verify", authController.VerifyEmail)
 
 	r.GET("/locations", locationController.GetLocations)
 	r.POST("/locations", locationController.AddLocation)
@@ -27,5 +28,5 @@ func StartServer(locationController controllers.LocationController, authControll
 	r.PATCH("/locations/:id/lodgings/:lid/activities/:aid", activityController.UpdateActivity)
 	r.DELETE("/locations/:id/lodgings/:lid/activities/:aid", activityController.DeleteActivity)
 
-	r.Run("localhost:5060")
+	r.Run("localhost:8080")
 }

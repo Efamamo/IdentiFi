@@ -55,3 +55,15 @@ func (ac AuthController) Login(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusCreated, token)
 
 }
+
+func (ac *AuthController) VerifyEmail(c *gin.Context) {
+	token := c.Query("token")
+
+	err := ac.AuthUsecase.Verify(token)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid verification token"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Email verified successfully"})
+}
