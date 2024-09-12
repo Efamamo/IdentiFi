@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"gorm.io/driver/postgres"
+	"gorm.io/gorm/logger"
 
 	"gorm.io/gorm"
 )
@@ -25,7 +26,7 @@ func ConnectToDB() {
 		host, port, user, password, dbname)
 
 	var err error
-	DB, err = gorm.Open(postgres.Open(psqlInfo), &gorm.Config{})
+	DB, err = gorm.Open(postgres.Open(psqlInfo), &gorm.Config{Logger: logger.Default.LogMode(logger.Info)})
 	if err != nil {
 		log.Fatal(err)
 	}

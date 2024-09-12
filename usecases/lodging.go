@@ -10,7 +10,7 @@ type LodgingUsecase struct {
 }
 
 func (ldu LodgingUsecase) GetLodgings(location string) (*[]domain.Lodging, error) {
-	lodgings, err := ldu.LodgingRepo.Get(location)
+	lodgings, err := ldu.LodgingRepo.GetLodgings(location)
 
 	if err != nil {
 		return nil, err
@@ -20,7 +20,7 @@ func (ldu LodgingUsecase) GetLodgings(location string) (*[]domain.Lodging, error
 }
 
 func (ldu LodgingUsecase) GetLodgingById(id string) (*domain.Lodging, error) {
-	lodging, err := ldu.LodgingRepo.GetById(id)
+	lodging, err := ldu.LodgingRepo.GetLodgingById(id)
 
 	if err != nil {
 		return nil, err
@@ -30,7 +30,7 @@ func (ldu LodgingUsecase) GetLodgingById(id string) (*domain.Lodging, error) {
 }
 
 func (ldu LodgingUsecase) AddLodging(lodging domain.Lodging) (*domain.Lodging, error) {
-	l, err := ldu.LodgingRepo.Save(lodging)
+	l, err := ldu.LodgingRepo.SaveLodging(lodging)
 
 	if err != nil {
 		return nil, err
@@ -40,7 +40,7 @@ func (ldu LodgingUsecase) AddLodging(lodging domain.Lodging) (*domain.Lodging, e
 }
 
 func (ldu LodgingUsecase) UpdateLodging(id string, lodging domain.LodgingUpdate) (*domain.Lodging, error) {
-	l, err := ldu.LodgingRepo.Update(id, lodging)
+	l, err := ldu.LodgingRepo.UpdateLodging(id, lodging)
 
 	if err != nil {
 		return nil, err
@@ -50,7 +50,7 @@ func (ldu LodgingUsecase) UpdateLodging(id string, lodging domain.LodgingUpdate)
 }
 
 func (ldu LodgingUsecase) DeleteLodging(id string) error {
-	err := ldu.LodgingRepo.Delete(id)
+	err := ldu.LodgingRepo.DeleteLodging(id)
 
 	if err != nil {
 		return err

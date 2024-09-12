@@ -16,11 +16,11 @@ func StartServer(locationController controllers.LocationController, authControll
 	r.PATCH("/locations/:id", locationController.UpdateLocation)
 	r.DELETE("/locations/:id", locationController.DeleteLocation)
 
-	r.GET("/lodgings", lodgingController.GetLodgings)
-	r.GET("/lodgings/:id", lodgingController.GetLodgingById)
-	r.POST("/lodgings", lodgingController.AddLodging)
-	r.PATCH("/lodgings/:id", lodgingController.UpdateLodging)
-	r.DELETE("/lodgings/:id", lodgingController.DeleteLodging)
+	r.GET("/:location_id/lodgings", lodgingController.GetLodgings)
+	r.GET("/:location_id/lodgings/:id", lodgingController.GetLodgingById)
+	r.POST("/:location_id/lodgings", lodgingController.AddLodging)
+	r.PATCH("/:location_id/lodgings/:id", lodgingController.UpdateLodging)
+	r.DELETE("/:location_id/lodgings/:id", lodgingController.DeleteLodging)
 
 	r.GET("/activities", activityController.GetActivities)
 	r.POST("/activities", activityController.AddActivity)
