@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/Efamamo/WonderBeam/domain"
@@ -72,8 +73,15 @@ func (ar ActivityRepo) UpdateActivity(aid string, updateValues domain.ActivityUp
 	return &activity, nil
 }
 func (ar ActivityRepo) GetActivities(lid string) (*[]domain.Activity, error) {
+	var lodging domain.Location
+	result := ar.DB.Where("id = ?", lid).First(&lodging)
+
+	if result.Error != nil {
+		return nil, errors.New("lodging not found")
+	}
+
 	var activities []domain.Activity
-	result := ar.DB.Where("lodging_id = ?", lid).Find(&activities)
+	result = ar.DB.Where("lodging_id = ?", lid).Find(&activities)
 
 	if result.Error != nil {
 		return nil, result.Error

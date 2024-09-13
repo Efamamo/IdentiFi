@@ -16,4 +16,5 @@ type User struct {
 	VerificationToken string    `json:"verification_token"`
 	IsVerified        bool      `json:"is_verified" gorm:"default:false"`
 	CreatedAt         time.Time
+	IsAdmin           bool `json:"is_admin"`
 }

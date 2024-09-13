@@ -37,6 +37,11 @@ func (ac ActivityController) AddActivity(ctx *gin.Context) {
 		return
 	}
 
+	if !startTime.Before(endTime) {
+		ctx.JSON(400, gin.H{"error": "start_time must be before end_time"})
+		return
+	}
+
 	lodging := ctx.Param("lid")
 	lodgingId, err := uuid.Parse(lodging)
 	if err != nil {
