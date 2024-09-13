@@ -14,7 +14,6 @@ type LodgingRepo struct {
 
 func (lr LodgingRepo) SaveLodging(lodging domain.Lodging) (*domain.Lodging, error) {
 	if err := lr.DB.First(&domain.Location{}, lodging.LocationID).Error; err != nil {
-
 		return nil, errors.New("location not found")
 	}
 
@@ -50,6 +49,7 @@ func (lr LodgingRepo) DeleteLocationLodgings(id string) error {
 	return nil
 }
 func (lr LodgingRepo) UpdateLodging(lid string, updateValues domain.LodgingUpdate) (*domain.Lodging, error) {
+	fmt.Println(updateValues)
 	var lodging domain.Lodging
 
 	if updateValues.Name != "" {
@@ -96,6 +96,12 @@ func (lr LodgingRepo) UpdateLodging(lid string, updateValues domain.LodgingUpdat
 	}
 	if updateValues.Website != "" {
 		result := lr.DB.Model(&domain.Lodging{}).Where("id = ?", lid).Update("website", updateValues.Website)
+		if result.Error != nil {
+			return nil, result.Error
+		}
+	}
+	if updateValues.Image != "" {
+		result := lr.DB.Model(&domain.Lodging{}).Where("id = ?", lid).Update("image", updateValues.Image)
 		if result.Error != nil {
 			return nil, result.Error
 		}

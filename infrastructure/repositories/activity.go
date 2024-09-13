@@ -56,8 +56,8 @@ func (ar ActivityRepo) UpdateActivity(aid string, updateValues domain.ActivityUp
 			return nil, result.Error
 		}
 	}
-	if updateValues.ImageURL != "" {
-		result := ar.DB.Model(&domain.Activity{}).Where("id = ?", aid).Update("image_url", updateValues.ImageURL)
+	if updateValues.Image != "" {
+		result := ar.DB.Model(&domain.Activity{}).Where("id = ?", aid).Update("image", updateValues.Image)
 		if result.Error != nil {
 			return nil, result.Error
 		}

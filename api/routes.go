@@ -7,12 +7,14 @@ import (
 
 func StartServer(locationController controllers.LocationController, authController controllers.AuthController, lodgingController controllers.LodgingController, activityController controllers.ActivityController) {
 	r := gin.Default()
+	r.Static("/uploads", "./uploads")
 
 	r.POST("/auth/signup", authController.Signup)
 	r.POST("/auth/login", authController.Login)
 	r.GET("/auth/verify", authController.VerifyEmail)
 
 	r.GET("/locations", locationController.GetLocations)
+	r.GET("/locations/:id", locationController.GetLocationById)
 	r.POST("/locations", locationController.AddLocation)
 	r.PATCH("/locations/:id", locationController.UpdateLocation)
 	r.DELETE("/locations/:id", locationController.DeleteLocation)

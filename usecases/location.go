@@ -1,6 +1,8 @@
 package usecases
 
 import (
+	"fmt"
+
 	"github.com/Efamamo/WonderBeam/domain"
 	repo_interfaces "github.com/Efamamo/WonderBeam/usecases/interfaces"
 )
@@ -11,6 +13,7 @@ type LocationUsecase struct {
 }
 
 func (lu LocationUsecase) GetLocations() (*[]domain.Location, error) {
+	fmt.Println("inside usecase")
 	locations, err := lu.LocationRepo.Get()
 
 	if err != nil {

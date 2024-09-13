@@ -27,6 +27,7 @@ func (lr LocationRepo) Get() (*[]domain.Location, error) {
 	var locations []domain.Location
 
 	result := lr.DB.Find(&locations)
+	fmt.Println("getting locations")
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -52,8 +53,8 @@ func (lr LocationRepo) Update(id string, updateData domain.LocationUpdate) (*dom
 			return nil, result.Error
 		}
 	}
-	if updateData.ImageURL != "" {
-		result := lr.DB.Model(&domain.Location{}).Where("id = ?", id).Update("image_url", updateData.ImageURL)
+	if updateData.Image != "" {
+		result := lr.DB.Model(&domain.Location{}).Where("id = ?", id).Update("image", updateData.Image)
 		if result.Error != nil {
 			return nil, result.Error
 		}
